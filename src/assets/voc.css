@@ -19,7 +19,6 @@
 .body-prova{
     margin-top: 20px;
     width: 100%;
-    background-color: rgb(255, 123, 0);
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -32,19 +31,92 @@
     font-size: 20px;
 }
 
+.body-prova .formulario{
+    width: 80%;
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.body-prova .formulario .input-box{
+    display: flex;
+    width: 120px;
+    justify-content: center;
+    flex-direction: column;
+    height: 70px;
+}
+
+.body-prova .formulario .input-box label{
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.body-prova .formulario .input-box input{
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background-color: rgb(180, 180, 180);
+}
+
+.body-prova .formulario .input-box input:focus{
+    background-color: rgb(216, 216, 216);
+    outline: none;
+}
+
+.body-prova .formulario .formulario-action{
+    width: 90px;
+    height: 70px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+
+.body-prova .formulario .formulario-action button{
+    width: 78px;
+    height: 35px;
+    margin-bottom: 5px;
+    background-color: hsla(160, 100%, 37%, 1);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    color: rgb(10, 43, 32);
+    font-weight: bold;
+    transition: all 0.3s ease-in;
+}
+
+.body-prova .formulario .formulario-action button:hover{
+    background-color: rgb(198, 250, 198);
+    color: rgb(12, 78, 45);
+}
+
 .body-prova .todos{
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
 }
 
 .body-prova .todos table{
-    background-color: red;
-    width: 300px;
+    background-color: rgb(26, 24, 24);
+    width: 80%;
 }
 
-.body-prova .todos table tr td{
+.body-prova .todos table thead{
+    background-color: rgb(0, 0, 0);
+    text-align: center;
+}
+
+.body-prova .todos table tr{
+    width: 100%;
+    background-color: transparent;
     margin-left: 35px;
+}
+
+.body-prova .todos table td{
+    text-align: center;
 }
