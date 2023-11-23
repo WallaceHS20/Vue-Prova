@@ -4,16 +4,24 @@
             <h4>CADASTRAR NOVO VOCÁBULO</h4>
             <div class="formulario">
                 <div class="input-box">
-                    <label for="termo">Termo</label>
-                    <input type="text" name="termo" v-model="termo">
+                    <label for="termo">Nome</label>
+                    <input type="text" name="termo" v-model="nome">
                 </div>
                 <div class="input-box">
-                    <label for="significado">Significado</label>
-                    <input type="text" name="significado" v-model="significado">
+                    <label for="datahora">Data/Hora</label>
+                    <input type="datetime-local" name="datahora" v-model="data">
                 </div>
                 <div class="input-box">
-                    <label for="significado">Versão</label>
-                    <input type="number" name="significado" v-model="versao">
+                    <label for="significado">Duracao</label>
+                    <input type="number" name="significado" v-model="duracao">
+                </div>
+                <div class="input-box">
+                    <label for="significado">Cep</label>
+                    <input type="number" name="significado" v-model="cep">
+                </div>
+                <div class="input-box">
+                    <label for="significado">Num</label>
+                    <input type="number" name="significado" v-model="num">
                 </div>
                 <div class="formulario-action">
                     <button @click="cadastrar()">Cadastrar</button>
@@ -22,12 +30,12 @@
             <h4>BUSCAR VOCÁBULO</h4>
             <div class="formulario">
                 <div class="input-box">
-                    <label for="significado">Termo</label>
-                    <input type="text" name="significado" v-model="termo">
+                    <label for="significado">Nome</label>
+                    <input type="text" name="significado" v-model="nome">
                 </div>
                 <div class="input-box">
                     <label for="significado">Versão</label>
-                    <input type="number" name="significado" v-model="versao">
+                    <input type="datetime-local" name="significado" v-model="data">
                 </div>
                 <div class="formulario-action">
                     <button @click="buscarTermo()">Buscar</button>
@@ -38,16 +46,17 @@
                 <table>
                     <thead>
                         <td>ID</td>
-                        <td>TERMO</td>
-                        <td>VERSÃO</td>
-                        <td>SIGNIFICADO</td>
+                        <td>NOME</td>
+                        <td>DATA/HORA</td>
+                        <td>TIPO</td>
                     </thead>
                     <tbody>
                         <tr v-for="voc in vocabulos">
                             <td>{{ voc.id }}</td>
-                            <td>{{ voc.termo }}</td>
-                            <td>{{ voc.versao }}</td>
-                            <td>{{ voc.significado }}</td>
+                            <td>{{ voc.nome }}</td>
+                            <td>{{ voc.dataHora }}</td>
+                            <td v-if="voc.cep">Presencial</td>
+                            <td v-else>Online</td>
                         </tr>
                     </tbody>
                 </table>
@@ -55,7 +64,7 @@
             <div v-else="erro" class="todos">
                 <p>{{ erro }}</p>
                 <div class="formulario-action">
-                    <button @click="atualizar()">Retornar</button>
+                    <button @click="retornar()">Retornar</button>
                 </div>
             </div>
         </div>
@@ -73,14 +82,18 @@ const erro = ref();
 //variável para receber o resultado do get
 const vocabulos = ref();
 
-const termo = ref()
-const significado = ref()
-const versao = ref()
+const nome = ref()
+const data = ref()
+const duracao = ref()
+const cep = ref()
+const num = ref()
 
 //função de captura de dados
 async function atualizar() {
-    try {                                  // COLOCAR URL DO GITPOD SERVIDOR SPRING //
-        vocabulos.value = (await axios.get("https://8080-wallacehs20-springboots-ija7j0ufl4t.ws-us106.gitpod.io/vocabulo")).data;
+    try {                                  
+        vocabulos.value = (await axios.get("https://8080-pavaodogsi-springboot3l-e9tclh5yhb8.ws-us106.gitpod.io/compromisso")).data;
+        console.log(vocabulos.value);
+        
     }
     catch (ex) {
         alert('DEU RUIM!!')
@@ -89,9 +102,10 @@ async function atualizar() {
 }
 
 //função de captura de dados POR TERMO E VERSAO
+
 async function buscarTermo() {
-    try {                                  // COLOCAR URL DO GITPOD SERVIDOR SPRING //
-        vocabulos.value = (await axios.get(`https://8080-wallacehs20-springboots-ija7j0ufl4t.ws-us106.gitpod.io/vocabulo/${termo.value}/${versao.value}`)).data;
+    try {                                  
+        vocabulos.value = (await axios.get(`https://8080-pavaodogsi-springboot3l-e9tclh5yhb8.ws-us106.gitpod.io/compromisso/${nome.value}/${data.value}`)).data;
         
         //SE RETORNAR VAZIO
         if(vocabulos.value == ''){
@@ -104,22 +118,30 @@ async function buscarTermo() {
     }
 }
 
+function retornar(){
+    location.reload ()
+}
+
 //CADASTRAR NOVO VOCABULO
 async function cadastrar() {
     try {
-        await axios.post("https://8080-wallacehs20-springboots-ija7j0ufl4t.ws-us106.gitpod.io/vocabulo",
+        await axios.post("https://8080-pavaodogsi-springboot3l-e9tclh5yhb8.ws-us106.gitpod.io/compromisso",
             {
-                termo: termo.value,
-                significado: significado.value,
-                versao: versao.value
+                nome: nome.value,
+                dataHora: data.value,
+                duracaoPrevista: duracao.value,
+                cep: cep.value,
+                numero: num.value,
             });
     
             alert('Cadastrado')
 
             // LIMPAR OS CAMPOS
-            termo.value = ''
-            significado.value = ''
-            versao.value = ''
+            nome.value = ''
+            cep.value = ''
+            data.value = ''
+            num.value = ''
+            duracao.value = ''
     }
     catch (ex) {
         erro.value = (ex as Error).message;
